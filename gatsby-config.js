@@ -3,5 +3,5 @@ module.exports = {
     siteUrl: "https://www.yourdomain.tld",
     title: "infoscreen_gatsby",
   },
-  plugins: [],
+  plugins: ["gatsby-plugin-typescript"],
 };
