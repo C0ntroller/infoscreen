@@ -1,0 +1,73 @@
+.container {
+    grid-area: date-weather;
+    display: grid;
+    grid-template-areas:
+        "time currentIcon currentTemp"
+        "date currentCondition currentCondition"
+        "forecast forecast forecast";
+    grid-template-columns: auto min-content min-content;
+    grid-template-rows: min-content min-content auto;
+    column-gap: 1vw;
+    row-gap: 0;
+    align-items: stretch;
+    justify-content: stretch;
+    padding: 10px;
+    text-align: center;
+}
+
+#clock {
+    grid-area: time;
+    font-size: 14vh;
+}
+
+#weatherIcon {
+    grid-area: currentIcon;
+    height: 15vh;
+}
+
+.container svg {
+    height: 100%;
+    fill: var(--iconColor);
+}
+
+#temperature {
+    grid-area: currentTemp;
+    font-size: 12vh;
+}
+
+#date {
+    grid-area: date;
+    font-size: 2.5vh;
+    padding-bottom: 10px;
+}
+
+#currentWeatherInfos {
+    grid-area: currentCondition;
+    font-size: 2.5vh;
+    padding-bottom: 10px;
+}
+
+#futureWeatherInfos {
+    border-top: 1px solid var(--iconColor);
+    grid-area: forecast;
+    height: 100%;
+    width: 100%;
+}
+
+#futureWeatherInfos th {
+    text-align: center;
+    font-size: 3vh;
+    font-weight: bold;
+}
+
+#futureWeatherInfos .futureWeatherHighTemp,
+#futureWeatherInfos .futureWeatherLowTemp {
+    text-align: right;
+    padding-right: 10px;
+    vertical-align: middle;
+    font-size: 3.5vh;
+}
+
+#futureWeatherInfos td {
+    padding-right: 5px;
+}

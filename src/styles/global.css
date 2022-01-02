@@ -1,0 +1,57 @@
+* {
+    box-sizing: border-box;
+}
+
+:root, :root[data-theme="day"] {
+    --containerBg: rgba(255,255,255,0.5);
+    --textColor: #000000;
+    color: #000000;
+    --iconColor: #000000;
+}
+:root[data-theme="night"] {
+    --containerBg: rgba(20,20,20,0.8);
+    --textColor: #b0b0b0;
+    color: #b0b0b0;
+    --iconColor: #b0b0b0;
+}
+
+body, main {
+    background: #000;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+main {
+    display: grid;
+    grid-template-areas:
+        "date-weather date-weather calendar"
+        "date-weather date-weather calendar"
+        "map          dvb          news"
+        "map          spotify      news";
+    grid-template-columns: 28vw auto 28vw;
+    grid-template-rows: 18vh 19vh 19vh 19vh;
+    column-gap: 3vw;
+    row-gap: 5vh;
+    padding: 5vh 3vw;
+    align-items: stretch;
+    justify-content: stretch;
+    max-width: 100%;
+    font-family: Arial;
+    transition: background-image 1s linear;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+:root[data-theme="night"] main {
+    background-image: url("../images/bg/3.jpg") !important;
+}
+
+.container {
+    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2);   
+    border-radius: 10px;
+    background: var(--containerBg);    
+    backdrop-filter: blur(5px);
+    padding:10px;
+    overflow:hidden;
+}
