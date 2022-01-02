@@ -1,46 +1,16 @@
 import * as React from "react"
-import type { WeatherInfo } from "../lib/interfaces";
+import { dowToString, monthToString } from "../lib/utils";
+import type { SecretsWeather, WeatherInfo } from "../lib/interfaces";
 import * as styles from "../styles/containers/WeatherAndTime.module.css";
 
 const WEATHER_REFRESH_INTERVAL = 15 * 60 * 1000;
-
-function dowToString(dow: number) {
-    switch (dow) {
-        case 0: return "Sonntag";
-        case 1: return "Montag";
-        case 2: return "Dienstag";
-        case 3: return "Mittwoch";
-        case 4: return "Donnerstag";
-        case 5: return "Freitag";
-        case 6: return "Samstag";
-        default: return;
-    }
-}
-
-function monthToString(month: number) {
-    switch (month) {
-        case 0: return "Januar";
-        case 1: return "Februar";
-        case 2: return "März";
-        case 3: return "April";
-        case 4: return "Mail";
-        case 5: return "Juni";
-        case 6: return "Juli";
-        case 7: return "August";
-        case 8: return "September";
-        case 9: return "Oktober";
-        case 10: return "November";
-        case 11: return "Dezember";
-        default: return;
-    }
-}
 
 function getWeatherIcon(icon: string) {
     const ImportedIcon = require(`../images/weather/${icon}.svg`);
     return <ImportedIcon />
 }
 
-const WeatherAndTimeContainer = ({ apiKey, coords }) => {
+const WeatherAndTime = ({ secrets }: { secrets: SecretsWeather }) => {
     const [date, setDate] = React.useState(new Date());
     const [weather, setWeather] = React.useState<WeatherInfo>({
         currently: {
@@ -77,7 +47,7 @@ const WeatherAndTimeContainer = ({ apiKey, coords }) => {
     }, [])
 
     const pullWeather = () => {
-        fetch(`https://api.pirateweather.net/forecast/${apiKey}/${coords}?exclude=minutely,hourly&lang=de&units=ca`)
+        fetch(`https://api.pirateweather.net/forecast/${secrets.apiKey}/${secrets.coords}?exclude=minutely,hourly&lang=de&units=ca`)
             .then(resp => resp.json())
             .then(setWeather);
     }
@@ -135,4 +105,4 @@ const WeatherAndTimeContainer = ({ apiKey, coords }) => {
     </div>)
 }
 
-export default WeatherAndTimeContainer;
+export default WeatherAndTime;

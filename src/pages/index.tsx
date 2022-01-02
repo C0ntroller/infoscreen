@@ -1,5 +1,6 @@
 import * as React from "react"
 import secrets from "../../secrets.json"
+import Calendar from "../components/Calendar";
 import WeatherAndTimeContainer from "../components/WeatherAndTime"
 
 function importAll(r) {
@@ -29,7 +30,8 @@ const IndexPage = () => {
   }
 
   return (<main style={{ backgroundImage: `url(${images[currentBg].default})` }}>
-    <WeatherAndTimeContainer apiKey={secrets.weather.apiKey} coords={secrets.weather.coords}/>
+    <WeatherAndTimeContainer secrets={secrets.weather} />
+    <Calendar secrets={secrets.calendar} />
   </main>)
 }
 

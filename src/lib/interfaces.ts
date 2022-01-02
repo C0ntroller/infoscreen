@@ -1,3 +1,16 @@
+export interface SecretsWeather {
+    apiKey: string;
+    coords: string;
+}
+
+export interface SecretsCalendar {
+    apiKey: string;
+    calendarId: string;
+    clientId: string;
+    clientSecret: string;
+    refreshToken: string;
+}
+
 export interface WeatherInfo {
     currently: {
         icon: string;
@@ -12,4 +25,9 @@ export interface WeatherInfo {
             temperatureLow: number;
         }[]
     }
+}
+
+export interface Event {
+    start: { dateTime: string; date?: string; };
+    summary: string;
 }
