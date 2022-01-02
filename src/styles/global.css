@@ -43,9 +43,15 @@ main {
     background-size: cover;
     background-position: center center;
 }
+
 :root[data-theme="night"] main {
     background-image: url("../images/bg/3.jpg") !important;
 }
+
+:root[data-theme="day"] .radar {display: block;}
+:root[data-theme="night"] .radar {display: none;}
+:root[data-theme="day"] .radarNight {display: none;}
+:root[data-theme="night"] .radarNight {display: block;}
 
 .container {
     box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2);   

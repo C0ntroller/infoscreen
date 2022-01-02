@@ -2,6 +2,7 @@ import * as React from "react"
 import secrets from "../../secrets.json"
 import Calendar from "../components/Calendar";
 import WeatherAndTimeContainer from "../components/WeatherAndTime"
+import WeatherRadar from "../components/WeatherRadar";
 
 function importAll(r) {
   return r.keys().map(r);
@@ -32,6 +33,7 @@ const IndexPage = () => {
   return (<main style={{ backgroundImage: `url(${images[currentBg].default})` }}>
     <WeatherAndTimeContainer secrets={secrets.weather} />
     <Calendar secrets={secrets.calendar} />
+    <WeatherRadar />
   </main>)
 }
 

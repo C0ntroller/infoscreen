@@ -1,0 +1,15 @@
+.container {
+    padding:5px !important;
+    grid-area: map;
+    place-self: center;
+    justify-self: center;
+}
+
+.radar, .radarNight {
+    max-width: max(calc(28vw - 10px), calc(43vh - 10px));
+}
+
+.radarNight {
+    image-rendering: pixelated;
+    width: max(calc(28vw - 10px), calc(43vh - 10px));
+}
