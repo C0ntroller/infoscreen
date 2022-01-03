@@ -3,6 +3,8 @@ import secrets from "../../secrets.json"
 import Calendar from "../components/Calendar";
 import DVB from "../components/DVB";
 import News from "../components/News";
+import Spotify from "../components/Spotify";
+import PlantState from "../components/PlantState";
 import WeatherAndTimeContainer from "../components/WeatherAndTime"
 import WeatherRadar from "../components/WeatherRadar";
 
@@ -38,6 +40,7 @@ const IndexPage = () => {
     <WeatherRadar />
     <News />
     <DVB stopId={secrets.dvb.stopId} />
+    <Spotify wsUrl="ws://localhost:10000" Alternative={<PlantState hassUrl={secrets.hass.url} token={secrets.hass.token} plants={["Chili", "Basilikum"]} />} />
   </main>)
 }
 

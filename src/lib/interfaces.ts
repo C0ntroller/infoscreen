@@ -33,13 +33,13 @@ export interface Event {
 }
 
 export interface News {
-    title: string; 
+    title: string;
     updated: string;
 }
 
 export interface PostillonNews {
-    title: string; 
-    pubDate: string; 
+    title: string;
+    pubDate: string;
     categories: string[];
 }
 
@@ -50,4 +50,18 @@ export interface Departure {
     ScheduledTime: string;
     State?: "Delayed" | "InTime" | "Canceled";
     CancelReasons?: string[];
+}
+
+export interface PlantState {
+    brightness: number | "unavailable";
+    conductivity: number | "unavailable";
+    moisture: number | "unavailable";
+    problem: string;
+    temperature: number | "unavailable";
+    unit_of_measurement_dict: {
+        brightness: string;
+        conductivity: string;
+        moisture: string;
+        temperature: string;
+    }
 }
