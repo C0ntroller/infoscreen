@@ -31,3 +31,23 @@ export interface Event {
     start: { dateTime: string; date?: string; };
     summary: string;
 }
+
+export interface News {
+    title: string; 
+    updated: string;
+}
+
+export interface PostillonNews {
+    title: string; 
+    pubDate: string; 
+    categories: string[];
+}
+
+export interface Departure {
+    Direction: string;
+    LineName: string;
+    RealTime?: string;
+    ScheduledTime: string;
+    State?: "Delayed" | "InTime" | "Canceled";
+    CancelReasons?: string[];
+}

@@ -28,3 +28,7 @@ export function monthToString(month: number) {
         default: return;
     }
 }
+
+export function minuteDiff(later: Date, before: Date) {
+    return Math.floor((later.getTime() - before.getTime()) / 60000);
+}

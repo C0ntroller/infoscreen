@@ -1,6 +1,7 @@
 import * as React from "react";
 import { XMLParser } from "fast-xml-parser";
 import * as styles from "../styles/containers/News.module.css"
+import type { News as NewsType, PostillonNews } from "../lib/interfaces";
 
 const NEWS_REFRESH_INTERVAL = 15 * 60 * 1000;
 
@@ -14,7 +15,7 @@ const News = () => {
         return () => clearInterval(newsInterval);
     }, [])
 
-    const processNews = (news: {title: string; updated: string;}[], postillon: {title: string; pubDate: string; categories: string[]}[]) => {
+    const processNews = (news: NewsType[], postillon: PostillonNews[]) => {
         const newsTable = []
 
         for (const n of news) {
