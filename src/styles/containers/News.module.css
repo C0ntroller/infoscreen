@@ -1,0 +1,38 @@
+.container {
+    grid-area: news;
+}
+
+.inner {
+    height:100%;
+    width: 100%;
+    overflow:hidden;   
+    border-radius: 5px;
+}
+
+.inner table {
+    animation: newsSlider 60s linear 0s infinite normal;
+    border-collapse: collapse;
+}
+
+.inner tr {
+    background:rgba(0, 0, 0, .1);
+    border-bottom: 2px solid black;
+}
+
+.inner td {
+    padding:5px;
+}
+
+.inner td:last-child {
+    text-align: right;
+    font-size: smaller;
+}
+
+.inner td:first-child {
+    font-size: 120%;
+}
+
+@keyframes newsSlider {
+    from {transform: translateY(0);}
+    to {transform: translateY(-100%);}
+}

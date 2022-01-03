@@ -1,6 +1,7 @@
 import * as React from "react"
 import secrets from "../../secrets.json"
 import Calendar from "../components/Calendar";
+import News from "../components/News";
 import WeatherAndTimeContainer from "../components/WeatherAndTime"
 import WeatherRadar from "../components/WeatherRadar";
 
@@ -34,6 +35,7 @@ const IndexPage = () => {
     <WeatherAndTimeContainer secrets={secrets.weather} />
     <Calendar secrets={secrets.calendar} />
     <WeatherRadar />
+    <News />
   </main>)
 }
 
