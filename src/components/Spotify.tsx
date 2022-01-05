@@ -1,22 +1,35 @@
 import * as React from "react"
-import useWebSocket from "react-use-websocket";
+//import useWebSocket from "react-use-websocket";
+import {connect} from "mqtt"
+import type { SecretsMQTT } from "../lib/interfaces"
 import * as styles from "../styles/containers/Spotify.module.css"
 
-const Spotify = ({ wsUrl, Alternative }: { wsUrl: string, Alternative: any }) => {
-    const { lastJsonMessage, getWebSocket, sendJsonMessage } = useWebSocket(wsUrl, {
-        onOpen: () => sendJsonMessage({GET:1}),
-        onMessage: (evt) => {
-            console.log(evt.data)
-        },
-        //Will attempt to reconnect on all close events, such as server shutting down
-        shouldReconnect: (closeEvent) => closeEvent.code !== 1000,
-    });
+const Spotify = ({ mqtt, Alternative }: { mqtt: SecretsMQTT, Alternative: any }) => {
+    const [lastSongInfo, setLastSongInfo] = React.useState<string>("")
+
+    const handleMessage = (_topic: string, message: string) => {
+        setLastSongInfo(message.toString())
+    }
 
     React.useEffect(() => {
-        console.log(lastJsonMessage)
-    }, [lastJsonMessage])
+        const client = connect(mqtt.url, {
+            username: mqtt.username,
+            password: mqtt.password,
+            protocol: "mqtt"
+        });
 
-    if (!lastJsonMessage || lastJsonMessage.playbackState !== "Play") {
+        client.on("message", handleMessage)
+
+        client.on("connect", () => {
+            console.log("CONNECTED")
+            client.publish("infoscreen/hello", "hello");
+            client.subscribe("infoscreen/spotify")
+        })
+
+        return () => {client.end()}
+    }, [])
+
+    if (true /*!lastJsonMessage || lastJsonMessage.playbackState !== "Play"*/) {
         return Alternative;
     }
 

@@ -40,7 +40,7 @@ const IndexPage = () => {
     <WeatherRadar />
     <News />
     <DVB stopId={secrets.dvb.stopId} />
-    <Spotify wsUrl="ws://localhost:10000" Alternative={<PlantState hassUrl={secrets.hass.url} token={secrets.hass.token} plants={["Chili", "Basilikum"]} />} />
+    <Spotify mqtt={secrets.mqtt} Alternative={<PlantState hassUrl={secrets.hass.url} token={secrets.hass.token} plants={["Chili", "Basilikum"]} />} />
   </main>)
 }
 

@@ -11,6 +11,12 @@ export interface SecretsCalendar {
     refreshToken: string;
 }
 
+export interface SecretsMQTT {
+    url: string;
+    username: string;
+    password: string;
+}
+
 export interface WeatherInfo {
     currently: {
         icon: string;
