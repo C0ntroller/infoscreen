@@ -3,6 +3,7 @@ version: '3'
 services:
   server:
     image: localhost:5000/infoscreen:latest
+    container_name: infoscreen
     restart: always
     ports:
       - 11460:80 # 1, 14th char in alphabet, 6th char in alphabet, 0
