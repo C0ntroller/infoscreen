@@ -55,6 +55,7 @@
 }
 
 #futureWeatherInfos th {
+    width: 25%;
     text-align: center;
     font-size: 3vh;
     font-weight: bold;
