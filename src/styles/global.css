@@ -45,7 +45,7 @@ main {
 }
 
 :root[data-theme="night"] main {
-    background-image: url("../images/bg/3.jpg") !important;
+    background-image: url("../images/custom/bg/3.jpg") !important;
 }
 
 :root[data-theme="day"] .radar {display: block;}

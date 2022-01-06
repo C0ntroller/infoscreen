@@ -1,5 +1,5 @@
 import * as React from "react";
-import sleep from "../images/sleep.gif";
+import sleep from "../images/custom/sleep.gif";
 import * as styles from "../styles/containers/WeatherRadar.module.css";
 
 const RADAR_REFRESH_INTERVAL = 15 * 60 * 1000;

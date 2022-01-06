@@ -1,3 +1,6 @@
 [submodule "src/images/weather-icons"]
 	path = src/images/weather-icons
 	url = git@github.com:erikflowers/weather-icons.git
+[submodule "src/images/custom"]
+	path = src/images/custom
+	url = git@git.c0ntroller.de:c0ntroller/infoscreen-custom-images.git
