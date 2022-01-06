@@ -65,7 +65,7 @@ const Calendar = ({ secrets }: { secrets: SecretsCalendar }) => {
                 eventTable.push(
                     <tr key={++i} className={styles.calendarEntry}>
                         <td>{event.summary}</td>
-                        <td>{startDate.getHours()}:{startDate.getMinutes().toString().padStart(2, "0")}</td>
+                        <td className={styles.entryTime}>{startDate.getHours()}:{startDate.getMinutes().toString().padStart(2, "0")}</td>
                     </tr>
                 )
             }

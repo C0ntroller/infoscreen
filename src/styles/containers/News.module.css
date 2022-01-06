@@ -10,7 +10,7 @@
 }
 
 .inner table {
-    animation: newsSlider 60s linear 0s infinite normal;
+    animation: newsSlider 100s linear 0s infinite normal;
     border-collapse: collapse;
 }
 

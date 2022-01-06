@@ -1,26 +1,36 @@
 .container {
     grid-area: calendar;
 }
+
 .container table {
     width: 100%;
     border-collapse: collapse;
 }
+
 .calendarDateHeader {
     font-weight: bold;
     font-size: 2vh;
     background: rgba(0, 0, 0, .1);
 }
+
 .calendarDateHeaderSub {
     font-size: 1.5vh;
     padding-top: 0.4vh;
     float: right;
 }
+
 .container table td {
     padding: 5px;
 }
+
 .container tr td:first-of-type {
     width: 100%;
 }
+
+.entryTime {
+    text-align: right;
+}
+
 .container tr.calendarEntry {
     border-top: 1px solid #000000;
     font-size: 1.8vh;
