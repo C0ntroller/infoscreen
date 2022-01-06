@@ -21,6 +21,13 @@ steps:
   - ssh-keyscan github.com > /root/.ssh/known_hosts
   - ssh-keyscan git.c0ntroller.de >> /root/.ssh/known_hosts
   - git submodule update --init --recursive
+- name: secrets
+  image: alpine
+  environment:
+    SECRETS_JSON:
+      from_secret: secrets_json
+  commands:
+  - echo "$${SECRETS_JSON}" > secrets.json
 - name: build-image
   image: plugins/docker
   settings:
