@@ -72,8 +72,33 @@ steps:
       from_secret: registry_host
     IMAGE: infoscreen:latest
   commands:
-  #- docker login -u $${DOCKER_USER} -p $${DOCKER_PASS}
   - docker-compose -p infoscreen -f docker-compose.yml rm -s -v -f
   - docker rmi $${REGISTRY_HOST}/$${IMAGE} || true
   - docker pull $${REGISTRY_HOST}/$${IMAGE}
   - docker-compose -p infoscreen -f docker-compose.yml up --no-build -d
+---
+kind: pipeline
+type: ssh
+name: refresh-client
+depends_on:
+- deploy
+trigger:
+  branch:
+  - senpai
+  event:
+  - push
+server:
+  host:
+    from_secret: ssh_client_host
+  user:
+    from_secret: ssh_client_user
+  ssh_key:
+    from_secret: ssh_key
+steps:
+- name: deploy
+  when:
+    branch:
+    - senpai
+  commands:
+  - export DISPLAY=:0
+  - xdotool search --onlyvisible --class "chromium-browser" key F5

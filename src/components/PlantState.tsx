@@ -1,6 +1,8 @@
 import * as React from "react"
 import { PlantState as PlantStateType } from "../lib/interfaces";
-import * as styles from "../styles/containers/PlantState.module.css"
+import * as styles from "../styles/containers/PlantState.module.css";
+import WaterDrops from "../images/weather-icons/svg/wi-raindrops.svg";
+import Dust from "../images/weather-icons/svg/wi-dust.svg";
 
 const PLANT_REFRESH_INTERVAL = 15 * 60 * 1000;
 
@@ -37,11 +39,11 @@ const PlantState = ({ hassUrl, token, plants }: { hassUrl: string, token: string
             return <div key={key} className={styles.plant}>
                 <div>{key}</div>
                 <div className={plantStates[key].problem.includes("moisture") ? styles.problem : ""}>
-                    <span className={styles.icon}>💧</span><br />
+                    <span className={styles.icon}><WaterDrops width="90px"/></span><br />
                     {plantStates[key].moisture === "unavailable" ? "?" : plantStates[key].moisture} {plantStates[key].unit_of_measurement_dict.moisture}
                 </div>
                 <div className={plantStates[key].problem.includes("conductivity") ? styles.problem : ""}>
-                    <span className={styles.icon}>🪴</span><br />
+                    <span className={styles.icon}><Dust width="90px"/></span><br />
                     {plantStates[key].conductivity === "unavailable" ? "?" : plantStates[key].conductivity} {plantStates[key].unit_of_measurement_dict.conductivity}
                 </div>
             </div>

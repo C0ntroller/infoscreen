@@ -7,3 +7,8 @@ declare module '*.gif' {
   const path: string;
   export = path;
 }
+
+declare module "*.svg" {
+  const content: any;
+  export default content;
+}

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 * {
     box-sizing: border-box;
 }
@@ -37,7 +39,7 @@ main {
     align-items: stretch;
     justify-content: stretch;
     max-width: 100%;
-    font-family: Arial;
+    font-family: "Roboto";
     transition: background-image 1s linear;
     background-repeat: no-repeat;
     background-size: cover;
