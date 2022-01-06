@@ -1,18 +1,26 @@
 {
-  "name": "infoscreen_gatsby",
+  "name": "infoscreen",
   "version": "1.0.0",
   "private": true,
-  "description": "infoscreen_gatsby",
+  "description": "A rewrite of my personal infoscreen.",
   "author": "Daniel Kluge",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "raspberrypi",
+    "raspberry",
+    "react",
+    "infoscreen"
   ],
+  "repository": {
+    "url": "https://git.c0ntroller.de/c0ntroller/infoscreen"
+  },
+  "license": "GPL-3.0-only",
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "gatsby develop",
-    "build": "gatsby build",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean"
+    "develop": "npx gatsby develop",
+    "start": "npx gatsby develop",
+    "build": "npx gatsby build",
+    "serve": "npx gatsby serve",
+    "clean": "npx gatsby clean"
   },
   "dependencies": {
     "buffer": "^6.0.3",
