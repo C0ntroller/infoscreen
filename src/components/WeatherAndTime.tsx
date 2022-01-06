@@ -52,6 +52,12 @@ const WeatherAndTime = ({ secrets }: { secrets: SecretsWeather }) => {
         }
     });
 
+    const pullWeather = () => {
+        fetch(`https://api.pirateweather.net/forecast/${secrets.apiKey}/${secrets.coords}?exclude=minutely,hourly&lang=de&units=ca`)
+            .then(resp => resp.json())
+            .then(setWeather);
+    }
+
     React.useEffect(() => {
         const dateInterval = setInterval(() => {
             const date = new Date()
@@ -68,12 +74,6 @@ const WeatherAndTime = ({ secrets }: { secrets: SecretsWeather }) => {
             clearInterval(weatherInterval);
         }
     }, [])
-
-    const pullWeather = () => {
-        fetch(`https://api.pirateweather.net/forecast/${secrets.apiKey}/${secrets.coords}?exclude=minutely,hourly&lang=de&units=ca`)
-            .then(resp => resp.json())
-            .then(setWeather);
-    }
 
     const time = `${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")}`;
     const dateString = `${dowToString(date.getDay())}, der ${date.getDate()}. ${monthToString(date.getMonth())} ${date.getFullYear()}`;

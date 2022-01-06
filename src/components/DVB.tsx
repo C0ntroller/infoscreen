@@ -9,13 +9,6 @@ const DVB = ({ stopId }: { stopId: number }) => {
     const [departuresHead, setDeparturesHead] = React.useState("")
     const [departuresTable, setDeparturesTable] = React.useState([])
 
-    React.useEffect(() => {
-        pullDepartures();
-        const dvbInterval = setInterval(pullDepartures, DVB_REFRESH_INTERVAL);
-
-        return () => clearInterval(dvbInterval);
-    }, [])
-
     const processDepatures = (departures: Departure[]) => {
         const depTable = [];
 
@@ -55,13 +48,19 @@ const DVB = ({ stopId }: { stopId: number }) => {
         });
         const data = await response.json();
         if (data.Name !== departuresHead) setDeparturesHead(data.Name);
-        console.log(data)
+        //console.log(data)
         processDepatures(data.Departures);
     }
 
+    React.useEffect(() => {
+        pullDepartures();
+        const dvbInterval = setInterval(pullDepartures, DVB_REFRESH_INTERVAL);
+
+        return () => clearInterval(dvbInterval);
+    }, [])
+
     return (<div className={`container ${styles.container}`}>
         <table>
-            
             <tbody>
                 {departuresTable}
             </tbody>

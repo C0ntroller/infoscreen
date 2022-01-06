@@ -8,13 +8,6 @@ const NEWS_REFRESH_INTERVAL = 15 * 60 * 1000;
 const News = () => {
     const [news, setNews] = React.useState([])
 
-    React.useEffect(() => {
-        pullNews()
-        const newsInterval = setInterval(pullNews, NEWS_REFRESH_INTERVAL);
-
-        return () => clearInterval(newsInterval);
-    }, [])
-
     const processNews = (news: NewsType[], postillon: PostillonNews[]) => {
         const newsTable = []
 
@@ -49,7 +42,7 @@ const News = () => {
     const pullNews = async () => {
         const xml = new XMLParser();
         const response = await fetch("https://www.tagesschau.de/xml/atom/");
-        const feed: {title: string; updated: string;}[] = xml.parse(await response.text()).feed.entry;
+        const feed: { title: string; updated: string; }[] = xml.parse(await response.text()).feed.entry;
 
         // Feedburner does not allow cors but at least we get JSON
         const postResponse = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Ffeeds.feedburner.com%2Fblogspot%2FrkEL");
@@ -57,6 +50,13 @@ const News = () => {
 
         processNews(feed, data.items);
     }
+
+    React.useEffect(() => {
+        pullNews()
+        const newsInterval = setInterval(pullNews, NEWS_REFRESH_INTERVAL);
+
+        return () => clearInterval(newsInterval);
+    }, [])
 
     return <div className={`container ${styles.container}`}>
         <div className={styles.inner}>

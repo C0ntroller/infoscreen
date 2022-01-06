@@ -19,17 +19,6 @@ const Calendar = ({ secrets }: { secrets: SecretsCalendar }) => {
     const [token, setToken] = React.useState("")
     const [events, setEvents] = React.useState([])
 
-    React.useEffect(() => {
-        requestToken().then(pullCalendar)
-        const calendarInterval = setInterval(pullCalendar, CALENDAR_REFRESH_INTERVAL);
-        const calendarTokenInterval = setInterval(requestToken, CALENDAR_TOKEN_REFRESH_INTERVAL);
-
-        return () => {
-            clearInterval(calendarInterval);
-            clearInterval(calendarTokenInterval);
-        }
-    }, [])
-
     const processEventData = (events: Event[]) => {
         const eventTable = [];
         let lastDate = "";
@@ -109,6 +98,17 @@ const Calendar = ({ secrets }: { secrets: SecretsCalendar }) => {
         const events = await response.json();
         setEvents(processEventData(events.items));
     }
+
+    React.useEffect(() => {
+        requestToken().then(pullCalendar)
+        const calendarInterval = setInterval(pullCalendar, CALENDAR_REFRESH_INTERVAL);
+        const calendarTokenInterval = setInterval(requestToken, CALENDAR_TOKEN_REFRESH_INTERVAL);
+
+        return () => {
+            clearInterval(calendarInterval);
+            clearInterval(calendarTokenInterval);
+        }
+    }, [])
 
     return <div className={`container ${styles.container}`}>
         <table><tbody>

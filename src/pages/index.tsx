@@ -16,6 +16,12 @@ const images = importAll(require.context('../images/custom/bg/', false, /\.(png|
 
 const IndexPage = () => {
   const [currentBg, setCurrentBg] = React.useState(0);
+  
+  const updateBackground = () => {
+    let nextBg = Math.floor(Math.random() * images.length)
+    while (nextBg == currentBg) nextBg = Math.floor(Math.random() * images.length)
+    setCurrentBg(nextBg)
+  }
 
   React.useEffect(() => {
     // This effect is executed onload
@@ -27,12 +33,6 @@ const IndexPage = () => {
     // Return will be executed onunload
     return () => clearInterval(interval);
   }, [])
-
-  const updateBackground = () => {
-    let nextBg = Math.floor(Math.random() * images.length)
-    while (nextBg == currentBg) nextBg = Math.floor(Math.random() * images.length)
-    setCurrentBg(nextBg)
-  }
 
   return (<main style={{ backgroundImage: `url(${images[currentBg].default})` }}>
     <WeatherAndTimeContainer secrets={secrets.weather} />
