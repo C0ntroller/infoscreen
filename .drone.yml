@@ -11,7 +11,15 @@ steps:
   - echo '${DRONE_COMMIT:0:8},latest' > .tags
 - name: clone-submodules
   image: alpine/git
+  environment:
+    SSH_KEY:
+      from_secret: ssh_git_key
   commands:
+  - mkdir -p /root/.ssh
+  - echo "$${SSH_KEY}" > /root/.ssh/id_rsa
+  - chmod 600 /root/.ssh/id_rsa
+  - ssh-keyscan github.com > /root/.ssh/known_hosts
+  - ssh-keyscan git.c0ntroller.de >> /root/.ssh/known_hosts
   - git submodule update --init --recursive
 - name: build-image
   image: plugins/docker
