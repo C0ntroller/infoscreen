@@ -1,0 +1,64 @@
+kind: pipeline
+type: docker
+name: build
+trigger:
+  event:
+  - push
+steps:
+- name: tag-image
+  image: alpine
+  commands:
+  - echo '${DRONE_COMMIT:0:8},latest' > .tags
+- name: clone-submodules
+  image: alpine/git
+  commands:
+  - git submodule update --init --recursive
+- name: build-image
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: docker_user
+    password:
+      from_secret: docker_token
+    registry:
+      from_secret: registry_host
+    repo: 
+      from_secret: local_repo
+    insecure: true
+---
+kind: pipeline
+type: ssh
+name: deploy
+depends_on:
+- build
+trigger:
+  branch:
+  - senpai
+  event:
+  - push
+server:
+  host:
+    from_secret: ssh_host
+  user:
+    from_secret: ssh_user
+  ssh_key:
+    from_secret: ssh_key
+steps:
+- name: deploy
+  when:
+    branch:
+    - senpai
+  environment:
+    DOCKER_USER:
+      from_secret: docker_user
+    DOCKER_PASS:
+      from_secret: docker_token
+    REGISTRY_HOST:
+      from_secret: registry_host
+    IMAGE: infoscreen:latest
+  commands:
+  #- docker login -u $${DOCKER_USER} -p $${DOCKER_PASS}
+  - docker-compose -p infoscreen -f docker-compose.yml rm -s -v -f
+  - docker rmi $${REGISTRY_HOST}/$${IMAGE} || true
+  - docker pull $${REGISTRY_HOST}/$${IMAGE}
+  - docker-compose -p infoscreen -f docker-compose.yml up --no-build -d
