@@ -75,5 +75,5 @@ steps:
   #- docker login -u $${DOCKER_USER} -p $${DOCKER_PASS}
   - docker-compose -p infoscreen -f docker-compose.yml rm -s -v -f
   - docker rmi $${REGISTRY_HOST}/$${IMAGE} || true
-  - docker pull $${REGISTRY_HOST}/$${IMAGE}:latest
+  - docker pull $${REGISTRY_HOST}/$${IMAGE}
   - docker-compose -p infoscreen -f docker-compose.yml up --no-build -d
