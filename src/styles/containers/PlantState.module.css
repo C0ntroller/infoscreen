@@ -39,6 +39,10 @@
     font-size: 250%;
 }
 
+.icon svg {
+    fill: var(--iconColor);
+}
+
 .problem {
     color: #ff0000;
 }
