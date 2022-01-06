@@ -22,7 +22,6 @@ const PlantState = ({ hassUrl, token, plants }: { hassUrl: string, token: string
             plantStates[plant] = data.attributes
         }
 
-        console.log(plantStates);
         setPlantStates(plantStates);
     }
 

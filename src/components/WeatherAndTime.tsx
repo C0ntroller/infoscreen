@@ -6,7 +6,6 @@ import * as styles from "../styles/containers/WeatherAndTime.module.css";
 const WEATHER_REFRESH_INTERVAL = 15 * 60 * 1000;
 
 function getWeatherIcon(icon: string) {
-    //const isNight = document.querySelector(':root[data-theme="night"]') !== null
     let weatherIcon: string;
     switch (icon) {
         case "clear-day":
@@ -26,8 +25,13 @@ function getWeatherIcon(icon: string) {
             break;
         default: weatherIcon = icon
     }
-    const ImportedIcon = require(`../images/weather-icons/svg/wi-${weatherIcon}.svg`);
-    return <ImportedIcon />
+    try {
+        const ImportedIcon = require(`../images/weather-icons/svg/wi-${weatherIcon}.svg`);
+        return <ImportedIcon />
+    } catch {
+        const ImportedIcon = require("../images/weather-icons/svg/wi-alien.svg");
+        return <ImportedIcon />
+    }
 }
 
 const WeatherAndTime = ({ secrets }: { secrets: SecretsWeather }) => {
@@ -57,12 +61,11 @@ const WeatherAndTime = ({ secrets }: { secrets: SecretsWeather }) => {
         }, 1000);
 
         pullWeather()
-        //TODO
-        //const weatherInterval = setInterval(pullWeather, WEATHER_REFRESH_INTERVAL);
+        const weatherInterval = setInterval(pullWeather, WEATHER_REFRESH_INTERVAL);
 
         return () => {
             clearInterval(dateInterval);
-            //clearInterval(weatherInterval);
+            clearInterval(weatherInterval);
         }
     }, [])
 

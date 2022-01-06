@@ -10,11 +10,10 @@ const DVB = ({ stopId }: { stopId: number }) => {
     const [departuresTable, setDeparturesTable] = React.useState([])
 
     React.useEffect(() => {
-        //pullDepartures();
-        // TODO
-        //const dvbInterval = setInterval(pullDepartures, DVB_REFRESH_INTERVAL);
+        pullDepartures();
+        const dvbInterval = setInterval(pullDepartures, DVB_REFRESH_INTERVAL);
 
-        //return () => clearInterval(dvbInterval);
+        return () => clearInterval(dvbInterval);
     }, [])
 
     const processDepatures = (departures: Departure[]) => {

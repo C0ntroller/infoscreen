@@ -71,3 +71,10 @@ export interface PlantState {
         temperature: string;
     }
 }
+
+export interface SongInfo {
+    playbackState: "PLAYING" | "PAUSE" | "STOPPED";
+    title: string;
+    artists: string[];
+    album: string;
+}
