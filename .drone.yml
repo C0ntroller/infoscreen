@@ -73,7 +73,9 @@ steps:
     IMAGE: infoscreen:latest
   commands:
   - docker-compose -p infoscreen -f docker-compose.yml rm -s -v -f
+  - docker rmi localhost:5000/$${IMAGE} || true
   - docker rmi $${REGISTRY_HOST}/$${IMAGE} || true
+  - docker pull $${REGISTRY_HOST}/$${IMAGE}
   - docker-compose -p infoscreen -f docker-compose.yml up -d
 ---
 kind: pipeline
