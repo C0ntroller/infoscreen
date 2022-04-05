@@ -29,7 +29,7 @@ const DVB = ({ stopId }: { stopId: number }) => {
             );
         });
 
-        setDeparturesTable(depTable);
+        setDeparturesTable([...depTable]);
     }
 
     const pullDepartures = async () => {

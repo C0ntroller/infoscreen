@@ -36,7 +36,7 @@ const News = () => {
             )
         })
 
-        setNews(newsTable);
+        setNews([...newsTable]);
     }
 
     const pullNews = async () => {

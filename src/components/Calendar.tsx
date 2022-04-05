@@ -12,6 +12,9 @@ function daysDifference(date1: Date, date2: Date) {
         date2 = date1;
         date1 = tmp;
     }
+    console.log("Diff")
+    console.log(date1)
+    console.log(date2)
     return Math.ceil((date2.getTime() - date1.getTime()) / 1000 / 60 / 60 / 24);
 }
 
@@ -83,6 +86,7 @@ const Calendar = ({ secrets }: { secrets: SecretsCalendar }) => {
 
         const timeMin = new Date();
         timeMin.setHours(timeMin.getHours() - 1);
+        console.log(timeMin);
         const params = new URLSearchParams({
             orderBy: "startTime",
             fields: "items(creator,start,summary)",
@@ -96,7 +100,7 @@ const Calendar = ({ secrets }: { secrets: SecretsCalendar }) => {
             headers: { Authorization: `Bearer ${correctToken}` }
         });
         const events = await response.json();
-        setEvents(processEventData(events.items));
+        setEvents([...processEventData(events.items)]);
     }
 
     React.useEffect(() => {
