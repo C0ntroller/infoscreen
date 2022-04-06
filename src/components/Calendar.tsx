@@ -12,9 +12,12 @@ function daysDifference(date1: Date, date2: Date) {
         date2 = date1;
         date1 = tmp;
     }
-    console.log("Diff")
-    console.log(date1)
-    console.log(date2)
+    date1 = new Date(date1);
+    date1.setHours(0);
+    date1.setMinutes(0);
+    date2 = new Date(date2);
+    date2.setHours(0);
+    date2.setMinutes(0);
     return Math.ceil((date2.getTime() - date1.getTime()) / 1000 / 60 / 60 / 24);
 }
 
@@ -86,7 +89,6 @@ const Calendar = ({ secrets }: { secrets: SecretsCalendar }) => {
 
         const timeMin = new Date();
         timeMin.setHours(timeMin.getHours() - 1);
-        console.log(timeMin);
         const params = new URLSearchParams({
             orderBy: "startTime",
             fields: "items(creator,start,summary)",
