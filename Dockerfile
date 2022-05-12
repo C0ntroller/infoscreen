@@ -1,4 +1,4 @@
-FROM node:alpine AS builder
+FROM node:lts-alpine AS builder
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json ./
