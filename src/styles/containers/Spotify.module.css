@@ -6,16 +6,31 @@
     width:100%;
     height:100%;
     padding:5px;
-    background: var(--spotifyColor);
+    background: var(--containerBg);
     border-radius: 5px;
 }
-.container p {
+.meta {
     max-width: 21vw;
     color: inherit;
     word-wrap: normal;
+    padding: 5px 15px;
+    height:min-content;
+    margin: auto 0;
+    font-size: larger;
+}
+.meta span:not(:first-child) {
+    margin-top: 5px;
+    display: inline-block;
 }
 .title {
-    font-size: 180%;
+    font-size: 170%;
     font-weight: bold;
     color: inherit;
+    max-height: calc((19vh - 10px) / 2);
+    display: inline-block;
+    overflow-y: hidden;
+}
+.cover {
+    height: calc(19vh - 10px);
+    border-radius: 5px;
 }

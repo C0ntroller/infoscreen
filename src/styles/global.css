@@ -4,17 +4,22 @@
     box-sizing: border-box;
 }
 
+:root {
+    --textColorLight: #b0b0b0;
+    --textColorDark: #000000;
+}
+
 :root, :root[data-theme="day"] {
     --containerBg: rgba(255,255,255,0.5);
-    --textColor: #000000;
-    color: #000000;
-    --iconColor: #000000;
+    --textColor: var(--textColorDark);
+    color: var(--textColorDark);
+    --iconColor: var(--textColorDark);
 }
 :root[data-theme="night"] {
     --containerBg: rgba(20,20,20,0.8);
-    --textColor: #b0b0b0;
-    color: #b0b0b0;
-    --iconColor: #b0b0b0;
+    --textColor: var(--textColorLight);
+    color: var(--textColorLight);
+    --iconColor: var(--textColorLight);
 }
 
 body, main {

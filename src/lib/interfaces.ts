@@ -72,9 +72,10 @@ export interface PlantState {
     }
 }
 
-export interface SongInfo {
+export type SongInfo = {
     playbackState: "PLAYING" | "PAUSE" | "STOPPED";
-    title: string;
-    artists: string[];
-    album: string;
+    title?: string;
+    artist?: string[];
+    album?: string;
+    cover?: string;
 }

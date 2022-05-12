@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "buffer": "^6.0.3",
+    "fast-average-color": "^7.1.0",
     "fast-xml-parser": "^4.0.0-beta.8",
     "gatsby": "^4.4.0",
     "gatsby-plugin-react-svg": "^3.1.0",
