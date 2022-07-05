@@ -25,10 +25,11 @@
 
 .departure td:nth-child(1) {
     padding-left: 20px !important;
+    min-width: max-content;
 }
 
 .departure td:nth-child(2) {
-    width: 100%;
+    width: auto;
 }
 
 .departure td:nth-child(3), .departure td:nth-child(4) {
