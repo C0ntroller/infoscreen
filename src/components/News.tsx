@@ -6,17 +6,18 @@ import type { News as NewsType, PostillonNews } from "../lib/interfaces";
 const NEWS_REFRESH_INTERVAL = 15 * 60 * 1000;
 
 const News = () => {
-    const [news, setNews] = React.useState([])
+    const [news, setNews] = React.useState<JSX.Element[]>([])
 
     const processNews = (news: NewsType[], postillon: PostillonNews[]) => {
-        const newsTable = []
+        const newsTable: JSX.Element[] = []
 
+        let i = 0;
         for (const n of news) {
             if (!n.title || n.title === "") continue;
 
             const updated = new Date(n.updated);
             newsTable.push(
-                <tr key={n.title}>
+                <tr key={++i}>
                     <td>{n.title}</td>
                     <td>{updated.getHours()}:{updated.getMinutes().toString().padStart(2, "0")}</td>
                 </tr>

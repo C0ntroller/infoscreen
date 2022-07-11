@@ -7,10 +7,10 @@ const DVB_REFRESH_INTERVAL = 30 * 1000
 
 const DVB = ({ stopId }: { stopId: number }) => {
     const [departuresHead, setDeparturesHead] = React.useState("")
-    const [departuresTable, setDeparturesTable] = React.useState([])
+    const [departuresTable, setDeparturesTable] = React.useState<JSX.Element[]>([])
 
     const processDepatures = (departures: Departure[]) => {
-        const depTable = [];
+        const depTable: JSX.Element[] = [];
 
         departures.forEach((departure, index) => {
             const realTime = departure.RealTime ? new Date(parseInt(departure.RealTime.replace(/\/Date\(/g, "").replace(/\-.*$/g, ""))) : undefined;

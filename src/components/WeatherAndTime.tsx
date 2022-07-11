@@ -93,7 +93,7 @@ const WeatherAndTime = ({ secrets }: { secrets: SecretsWeather }) => {
             <thead>
                 <tr>
                     {(() => {
-                        const rslt = []
+                        const rslt: JSX.Element[] = []
                         for (let i = 0; i < 4; i++) {
                             const day = new Date((weather.daily.data[i].time * 1000));
                             rslt.push(<th colSpan={2} key={i}>{dowToString(day.getDay())}, {day.getDate()}. {day.getMonth() + 1}.</th>);
@@ -105,7 +105,7 @@ const WeatherAndTime = ({ secrets }: { secrets: SecretsWeather }) => {
             <tbody>
                 <tr>
                     {(() => {
-                        const rslt = []
+                        const rslt: JSX.Element[] = []
                         for (let i = 0; i < 4; i++) {
                             const style = i > 0 ? { borderLeft: "1px solid var(--iconColor)" } : {}
                             rslt.push(<td key={`00${i}`} rowSpan={2} style={style}>{getWeatherIcon(weather.daily.data[i].icon)}</td>);
@@ -116,7 +116,7 @@ const WeatherAndTime = ({ secrets }: { secrets: SecretsWeather }) => {
                 </tr>
                 <tr>
                     {(() => {
-                        const rslt = []
+                        const rslt: JSX.Element[] = []
                         for (let i = 0; i < 4; i++) {
                             rslt.push(<td key={i} className={styles.futureWeatherLowTemp}>{weather.daily.data[i].temperatureLow.toFixed(1)}°C</td>);
                         }
