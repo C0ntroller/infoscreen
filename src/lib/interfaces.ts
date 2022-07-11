@@ -5,7 +5,7 @@ export interface SecretsWeather {
 
 export interface SecretsCalendar {
     apiKey: string;
-    calendarId: string;
+    calendarIds: string[];
     clientId: string;
     clientSecret: string;
     refreshToken: string;
@@ -36,6 +36,7 @@ export interface WeatherInfo {
 export interface Event {
     start: { dateTime: string; date?: string; };
     summary: string;
+    ownerIdx?: number;
 }
 
 export interface News {

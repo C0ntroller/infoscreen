@@ -35,3 +35,11 @@
     border-top: 1px solid #000000;
     font-size: 1.8vh;
 }
+
+.color0 {
+    background: rgba(255, 170, 0, 0.2);
+}
+
+.color1 {
+    background: rgba(255, 0, 0, 0.2);
+}

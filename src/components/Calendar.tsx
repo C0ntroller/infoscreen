@@ -1,6 +1,6 @@
 import * as React from "react"
 import { dowToString } from "../lib/utils";
-import type { Event, SecretsCalendar } from "../lib/interfaces";
+import { Event, SecretsCalendar } from "../lib/interfaces";
 import * as styles from "../styles/containers/Calendar.module.css"
 
 const CALENDAR_REFRESH_INTERVAL = 15 * 60 * 1000;
@@ -21,13 +21,89 @@ function daysDifference(date1: Date, date2: Date) {
     return Math.ceil((date2.getTime() - date1.getTime()) / 1000 / 60 / 60 / 24);
 }
 
+interface EventList {
+    [day: number]: Event[]
+}
+
 const Calendar = ({ secrets }: { secrets: SecretsCalendar }) => {
     const [token, setToken] = React.useState("")
-    const [events, setEvents] = React.useState([])
+    const [events, setEvents] = React.useState<EventList>({})
 
-    const processEventData = (events: Event[]) => {
-        const eventTable = [];
-        let lastDate = "";
+    const mergeEvents = (currentList: EventList, toAdd: Event[], ownerIdx: number = 0) => {
+        for(const event of toAdd) {
+            const startDate = new Date(event.start.date ? event.start.date : event.start.dateTime)
+            const startDateString = startDate.toDateString()
+
+            if(currentList[startDateString] && Array.isArray(currentList[startDateString])) {
+                currentList[startDateString].push({ownerIdx, ...event});
+                
+            } else {
+                currentList[startDateString] = [{ownerIdx, ...event}];
+            }
+        }
+        for(const key of Object.keys(currentList)) {
+            if(!currentList[key] || !Array.isArray(currentList[key])) {
+                delete currentList[key];
+            } else {
+                (currentList[key] as Event[]).sort((a, b) => {
+                    const aStartDate = new Date(a.start.date ? a.start.date : a.start.dateTime);
+                    const bStartDate = new Date(b.start.date ? b.start.date : b.start.dateTime);
+                    return aStartDate.getTime() - bStartDate.getTime();
+                })
+            }
+        }
+    }
+
+    const renderEventTable = () => {
+        const eventTable: JSX.Element[] = [];
+
+        // We should probably sort it before using it
+        const dateKeyList = Object.keys(events)
+        dateKeyList.sort((a, b) => {
+            const aDate: Date = new Date(a);
+            const bDate: Date = new Date(b);
+            return aDate.getTime() - bDate.getTime();
+        });
+
+        let i = 0;
+        for (const date of dateKeyList) {
+            const day: Date = new Date(date);
+            const dayDiff = daysDifference(new Date(), day);
+            let dayDiffString: string;
+            switch (dayDiff) {
+                case 0: dayDiffString = "Heute"
+                    break;
+                case 1: dayDiffString = "Morgen"
+                    break;
+                default: dayDiffString = `${dayDiff} Tage`;
+                    break;
+            }
+            eventTable.push(
+                <tr key={date}><td colSpan={2} className={styles.calendarDateHeader}>
+                    {dowToString(day.getDay())}, {day.getDate()}. {day.getMonth() + 1}
+                    <span className={styles.calendarDateHeaderSub}>({dayDiffString})</span>
+                </td></tr>
+            );
+
+            for(const event of events[date]) {
+                const colorClass = styles[`color${event.ownerIdx}`]
+                if (event.start.date) {
+                    eventTable.push(
+                        <tr key={`${date}${i}`} className={`${styles.calendarEntry} ${colorClass}`}><td colSpan={2}>{event.summary}</td></tr>
+                    );
+                } else {
+                    const startTime = new Date(event.start.dateTime)
+                    eventTable.push(
+                        <tr key={++i} className={`${styles.calendarEntry} ${colorClass}`}>
+                            <td>{event.summary}</td>
+                            <td className={styles.entryTime}>{startTime.getHours()}:{startTime.getMinutes().toString().padStart(2, "0")}</td>
+                        </tr>
+                    )
+                }
+            }
+        }
+
+        /*let lastDate = "";
         let i = 0;
         for (const event of events) {
             const startDate = new Date(event.start.date ? event.start.date : event.start.dateTime)
@@ -64,7 +140,8 @@ const Calendar = ({ secrets }: { secrets: SecretsCalendar }) => {
                     </tr>
                 )
             }
-        }
+        }*/
+
         return eventTable;
     }
 
@@ -83,7 +160,7 @@ const Calendar = ({ secrets }: { secrets: SecretsCalendar }) => {
         return token.access_token;
     }
 
-    const pullCalendar = async (provToken: string) => {
+    const pullCalendar = async (provToken?: string, calendarIndex: number = 0) => {
         const correctToken = provToken || token;
         if (!correctToken || correctToken === "") return;
 
@@ -93,21 +170,31 @@ const Calendar = ({ secrets }: { secrets: SecretsCalendar }) => {
             orderBy: "startTime",
             fields: "items(creator,start,summary)",
             singleEvents: "true",
-            maxResults: "10",
+            maxResults: "20",
             timeMin: timeMin.toISOString(),
             key: (secrets.apiKey as string)
         });
 
-        const response = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${secrets.calendarId}/events?${params.toString()}`, {
+        const response = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${secrets.calendarIds[calendarIndex]}/events?${params.toString()}`, {
             headers: { Authorization: `Bearer ${correctToken}` }
         });
         const events = await response.json();
-        setEvents([...processEventData(events.items)]);
+        return events.items;
+        //setEvents([...processEventData(events.items)]);
+    }
+
+    const pullAll = async (provToken?: string) => {
+        const eventList: EventList = {}
+        for(let i = 0; i < secrets.calendarIds.length; i++) {
+            const events = await pullCalendar(provToken, i);
+            mergeEvents(eventList, events, i);
+        }
+        setEvents(eventList);
     }
 
     React.useEffect(() => {
-        requestToken().then(pullCalendar)
-        const calendarInterval = setInterval(pullCalendar, CALENDAR_REFRESH_INTERVAL);
+        requestToken().then(pullAll)
+        const calendarInterval = setInterval(pullAll, CALENDAR_REFRESH_INTERVAL);
         const calendarTokenInterval = setInterval(requestToken, CALENDAR_TOKEN_REFRESH_INTERVAL);
 
         return () => {
@@ -118,7 +205,9 @@ const Calendar = ({ secrets }: { secrets: SecretsCalendar }) => {
 
     return <div className={`container ${styles.container}`}>
         <table><tbody>
-            {events}
+            {
+                renderEventTable()
+            }
         </tbody></table>
     </div>
 
