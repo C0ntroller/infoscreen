@@ -54,7 +54,7 @@ const News = () => {
 
     React.useEffect(() => {
         pullNews()
-        const newsInterval = setInterval(pullNews, NEWS_REFRESH_INTERVAL);
+        const newsInterval = setInterval(pullNews.bind(this), NEWS_REFRESH_INTERVAL);
 
         return () => clearInterval(newsInterval);
     }, [])

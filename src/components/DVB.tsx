@@ -54,7 +54,7 @@ const DVB = ({ stopId }: { stopId: number }) => {
 
     React.useEffect(() => {
         pullDepartures();
-        const dvbInterval = setInterval(pullDepartures, DVB_REFRESH_INTERVAL);
+        const dvbInterval = setInterval(pullDepartures.bind(this), DVB_REFRESH_INTERVAL);
 
         return () => clearInterval(dvbInterval);
     }, [])

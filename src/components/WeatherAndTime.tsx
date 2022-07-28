@@ -67,7 +67,7 @@ const WeatherAndTime = ({ secrets }: { secrets: SecretsWeather }) => {
         }, 1000);
 
         pullWeather()
-        const weatherInterval = setInterval(pullWeather, WEATHER_REFRESH_INTERVAL);
+        const weatherInterval = setInterval(pullWeather.bind(this), WEATHER_REFRESH_INTERVAL);
 
         return () => {
             clearInterval(dateInterval);

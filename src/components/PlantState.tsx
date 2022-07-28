@@ -29,7 +29,7 @@ const PlantState = ({ hassUrl, token, plants }: { hassUrl: string, token: string
 
     React.useEffect(() => {
         pullPlants()
-        const plantInterval = setInterval(pullPlants, PLANT_REFRESH_INTERVAL);
+        const plantInterval = setInterval(pullPlants.bind(this), PLANT_REFRESH_INTERVAL);
 
         return () => clearInterval(plantInterval);
     }, [])

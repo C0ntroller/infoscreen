@@ -26,10 +26,11 @@ interface EventList {
 }
 
 const Calendar = ({ secrets }: { secrets: SecretsCalendar }) => {
-    const [token, setToken] = React.useState("")
+    const [calendarToken, setToken] = React.useState("")
     const [events, setEvents] = React.useState<EventList>({})
 
     const mergeEvents = (currentList: EventList, toAdd: Event[], ownerIdx: number = 0) => {
+        if (!toAdd || toAdd.length === 0) return;
         for(const event of toAdd) {
             const startDate = new Date(event.start.date ? event.start.date : event.start.dateTime)
             const startDateString = startDate.toDateString()
@@ -103,45 +104,6 @@ const Calendar = ({ secrets }: { secrets: SecretsCalendar }) => {
             }
         }
 
-        /*let lastDate = "";
-        let i = 0;
-        for (const event of events) {
-            const startDate = new Date(event.start.date ? event.start.date : event.start.dateTime)
-            const startDateString = `${startDate.getFullYear()}${startDate.getMonth()}${startDate.getDate()}`
-            if (startDateString !== lastDate) {
-                lastDate = startDateString;
-                const dayDiff = daysDifference(new Date(), startDate);
-                let dayDiffString: string;
-                switch (dayDiff) {
-                    case 0: dayDiffString = "Heute"
-                        break;
-                    case 1: dayDiffString = "Morgen"
-                        break;
-                    default: dayDiffString = `${dayDiff} Tage`;
-                        break;
-                }
-                eventTable.push(
-                    <tr key={startDateString}><td colSpan={2} className={styles.calendarDateHeader}>
-                        {dowToString(startDate.getDay())}, {startDate.getDate()}. {startDate.getMonth() + 1}
-                        <span className={styles.calendarDateHeaderSub}>({dayDiffString})</span>
-                    </td></tr>
-                );
-            }
-
-            if (event.start.date) {
-                eventTable.push(
-                    <tr key={++i} className={styles.calendarEntry}><td colSpan={2}>{event.summary}</td></tr>
-                );
-            } else {
-                eventTable.push(
-                    <tr key={++i} className={styles.calendarEntry}>
-                        <td>{event.summary}</td>
-                        <td className={styles.entryTime}>{startDate.getHours()}:{startDate.getMinutes().toString().padStart(2, "0")}</td>
-                    </tr>
-                )
-            }
-        }*/
-
         return eventTable;
     }
 
@@ -160,8 +122,8 @@ const Calendar = ({ secrets }: { secrets: SecretsCalendar }) => {
         return token.access_token;
     }
 
-    const pullCalendar = async (provToken?: string, calendarIndex: number = 0) => {
-        const correctToken = provToken || token;
+    const pullCalendar = async (calendarToken: string, calendarIndex: number = 0) => {
+        const correctToken = calendarToken;
         if (!correctToken || correctToken === "") return;
 
         const timeMin = new Date();
@@ -183,7 +145,7 @@ const Calendar = ({ secrets }: { secrets: SecretsCalendar }) => {
         //setEvents([...processEventData(events.items)]);
     }
 
-    const pullAll = async (provToken?: string) => {
+    const pullAll = async (provToken: string) => {
         const eventList: EventList = {}
         for(let i = 0; i < secrets.calendarIds.length; i++) {
             const events = await pullCalendar(provToken, i);
@@ -194,8 +156,13 @@ const Calendar = ({ secrets }: { secrets: SecretsCalendar }) => {
 
     React.useEffect(() => {
         requestToken().then(pullAll)
-        const calendarInterval = setInterval(pullAll, CALENDAR_REFRESH_INTERVAL);
-        const calendarTokenInterval = setInterval(requestToken, CALENDAR_TOKEN_REFRESH_INTERVAL);
+        const calendarInterval = setInterval(() => {
+            setToken(token => {
+                pullAll(token);
+                return token;
+            })
+        }, CALENDAR_REFRESH_INTERVAL);
+        const calendarTokenInterval = setInterval(requestToken.bind(this), CALENDAR_TOKEN_REFRESH_INTERVAL);
 
         return () => {
             clearInterval(calendarInterval);
