@@ -1,5 +1,7 @@
 # Infoscreen
 
+[![Read the blog entry at c0ntroller.de](https://c0ntroller.de/img/read-blog.svg)](https://c0ntroller.de/#/project/infoscreen)
+
 This is a project for personal use. An infoscreen that shows:
 - time
 - weather & weather radar
