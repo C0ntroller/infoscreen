@@ -31,7 +31,7 @@ const News = () => {
             const updated = new Date(n.pubDate);
             newsTable.splice(randTablePos, 0,
                 <tr key={n.title}>
-                    <td>{n.title}</td>
+                    <td>{n.title.replace(/&amp;/g, "&").replace(/&quot;/g, "\"")}</td>
                     <td>{updated.getHours()}:{updated.getMinutes().toString().padStart(2, "0")}</td>
                 </tr>
             )
