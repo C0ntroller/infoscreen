@@ -7,6 +7,7 @@ import Spotify from "../components/Spotify";
 import PlantState from "../components/PlantState";
 import WeatherAndTimeContainer from "../components/WeatherAndTime"
 import WeatherRadar from "../components/WeatherRadar";
+import HomeAssistant from "../components/HAssOverview";
 
 function importAll(r) {
   return r.keys().map(r);
@@ -40,7 +41,7 @@ const IndexPage = () => {
     <WeatherRadar />
     <News />
     <DVB stopId={secrets.dvb.stopId} />
-    <Spotify mqtt={secrets.mqtt} Alternative={<PlantState hassUrl={secrets.hass.url} token={secrets.hass.token} plants={["Basilikum", "Chili"]} />} />
+    <Spotify mqtt={secrets.mqtt} Alternative={<HomeAssistant hassUrl={secrets.hass.url} token={secrets.hass.token} />} />
   </main>)
 }
 

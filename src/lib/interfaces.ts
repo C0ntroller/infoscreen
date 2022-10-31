@@ -73,6 +73,12 @@ export interface PlantState {
     }
 }
 
+export interface HAssStates {
+    daniel: string|number|boolean;
+    vicki: string|number|boolean;
+    nextbikes: string|number|boolean;
+}
+
 export type SongInfo = {
     playbackState: "PLAYING" | "PAUSE" | "STOPPED";
     title?: string;
