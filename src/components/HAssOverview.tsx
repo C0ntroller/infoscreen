@@ -2,7 +2,7 @@ import * as React from "react"
 import { HAssStates } from "../lib/interfaces";
 import * as styles from "../styles/containers/HomeAssistant.module.css";
 
-const HASS_REFRESH_INTERVAL = 15 * 60 * 1000;
+const HASS_REFRESH_INTERVAL = 5 * 60 * 1000;
 
 const HomeAssistant = ({ hassUrl, token }: { hassUrl: string, token: string }) => {
     const [states, setStates] = React.useState<HAssStates>({
