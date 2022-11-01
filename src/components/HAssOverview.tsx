@@ -27,13 +27,18 @@ const HomeAssistant = ({ hassUrl, token }: { hassUrl: string, token: string }) =
         const vicki = await fetchState("person.vicki")
         const nextbikes = await fetchState("sensor.nextbikes")
 
+        const location = (l: string|undefined) => { switch (l) {
+                case "home": return "Zuhause";
+                case "not_home": return "Unterwegs";
+                case undefined: 
+                case "unknown": return "Unbekannt";
+                default: return l;
+            }
+        }
 
-        console.log(daniel);
-        console.log(vicki);
-        console.log(nextbikes);
         setStates({
-            daniel: daniel?.state === "home" ? "Zuhause" : "Unterwegs",
-            vicki: vicki?.state === "home" ? "Zuhause" : "Unterwegs",
+            daniel: location(daniel?.state),
+            vicki: location(vicki?.state),
             nextbikes: nextbikes?.state
         });
     }
