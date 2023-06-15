@@ -15,7 +15,7 @@ const News = () => {
         for (const n of news) {
             if (!n.title || n.title === "") continue;
 
-            const updated = new Date(n.updated);
+            const updated = new Date(n["dc:date"]);
             newsTable.push(
                 <tr key={++i}>
                     <td>{n.title}</td>
@@ -43,7 +43,7 @@ const News = () => {
     const pullNews = async () => {
         const xml = new XMLParser();
         const response = await fetch("https://www.tagesschau.de/xml/atom/");
-        const feed: { title: string; updated: string; }[] = xml.parse(await response.text()).feed.entry;
+        const feed: { title: string; "dc:date": string; }[] = xml.parse(await response.text()).feed.entry;
 
         // Feedburner does not allow cors but at least we get JSON
         const postResponse = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Ffeeds.feedburner.com%2Fblogspot%2FrkEL");
