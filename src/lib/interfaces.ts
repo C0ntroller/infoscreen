@@ -41,7 +41,7 @@ export interface Event {
 
 export interface News {
     title: string;
-    updated: string;
+    "dc:date": string;
 }
 
 export interface PostillonNews {
